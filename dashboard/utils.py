@@ -1,7 +1,13 @@
 import streamlit as st
 from mistralai import Mistral
+import pandas as pd
+import html
+from dotenv import load_dotenv
+import os
 
-API_KEY = ""
+load_dotenv()
+
+API_KEY = os.getenv("MISTRAL_API_KEY")
 
 def create_agent(client: Mistral):
     agent = client.beta.agents.create(

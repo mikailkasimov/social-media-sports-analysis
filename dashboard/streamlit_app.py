@@ -5,22 +5,22 @@ from datetime import date
 from utils import *
 
 DATA_FILES = {
-    "reddit_posts": "../data/reddit_posts_labelled.csv",
-    "reddit_comments": "../data/reddit_comments_labelled.csv",
-    "chan_posts": "../data/chan_posts_labelled.csv",
+    "reddit_posts": "../data/reddit_posts_labelled_filtered_2025-10-31_to_2025-11-14.parquet",
+    "reddit_comments": "../data/reddit_comments_labelled_filtered_2025-10-31_to_2025-11-14.parquet",
+    "chan_posts": "../data/chan_posts_labelled_filtered_2025-10-31_to_2025-11-14.parquet",
 }
 
 PERSPECTIVE_FILES = {
-    "reddit_posts": "../data/reddit_posts_perspective.csv",
-    "reddit_comments": "../data/reddit_comments_perspective.csv",
-    "chan_posts": "../data/chan_posts_perspective.csv",
+    "reddit_posts": "../data/reddit_posts_perspective.parquet",
+    "reddit_comments": "../data/reddit_comments_perspective.parquet",
+    "chan_posts": "../data/chan_posts_perspective.parquet",
 }
 
 FREQ_MAP = {
     "15min": "15min", "30min": "30min", "1h": "1H", "3h": "3H", "6h": "6H",
     "12h": "12H", "1d": "1D", "2d": "2D", "3d": "3D",
 }
-
+ 
 SPORTS = [ 
     "american football","basketball","baseball","soccer","ice hockey", "mma","boxing","track and field",
     "volleyball","beach volleyball", "swimming","golf","table tennis","car racing","snowboarding", "lacrosse",
@@ -42,8 +42,8 @@ st.title("Reddit and 4chan Sports Community Analysis")
 def load_data():
     out = {}
     for ds in DATA_FILES.keys():
-        df1 = pd.read_csv(DATA_FILES[ds])
-        df2 = pd.read_csv(PERSPECTIVE_FILES[ds])
+        df1 = pd.read_parquet(DATA_FILES[ds])
+        df2 = pd.read_parquet(PERSPECTIVE_FILES[ds])
         out[ds] = pd.concat([df1.reset_index(drop=True), df2[PERSPECTIVE_COLS].reset_index(drop=True)],axis=1)
     return out
 ALL_DATA = load_data()
